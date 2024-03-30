@@ -39,15 +39,27 @@ jobs:
       - name: Build with Gradle
         run: bash ./gradlew assembleRelease
       # 创建release
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Create Release
+      #   id: create_release
+      #   uses: actions/create-release@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     tag_name: ${{ github.ref }}
+      #     release_name: SmsForwarder ${{ github.ref }}
+      #     draft: false
+      - name: Create Release and Upload Release Asset
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
         with:
           tag_name: ${{ github.ref }}
-          release_name: SmsForwarder ${{ github.ref }}
+          name: Release ${{ github.ref }}
+          body: TODO New Release.
           draft: false
+          prerelease: false
+          # files: |
+          #   ${{ secrets.ReleaseZipName }}.zip
+          #   LICENSE 
           prerelease: false
       # 上传至release的资源
       - name: Upload release binaries
