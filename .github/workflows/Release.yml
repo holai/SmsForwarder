@@ -57,14 +57,26 @@ jobs:
           body: TODO New Release.
           draft: false
           # prerelease: false
-          # files: |
-          #   ${{ secrets.ReleaseZipName }}.zip
-          #   LICENSE 
+          files: |
+            ${{ github.ref }}.apk
+            LICENSE 
           # prerelease: false
       # 上传至release的资源
-      - name: Upload release binaries
-        uses: alexellis/upload-assets@0.2.2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Upload release binaries
+      #   uses: alexellis/upload-assets@0.2.2
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     asset_paths: '["./build/app/outputs/apk/release/SmsF_*"]'
+      - name: Create Release and Upload Release Asset
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
         with:
-          asset_paths: '["./build/app/outputs/apk/release/SmsF_*"]'
+          tag_name: ${{ github.ref }}
+          name: Release ${{ github.ref }}
+          body: TODO New Release.
+          draft: false
+          # prerelease: false
+          files: |
+            ${{ github.ref }}.apk
+            LICENSE 
