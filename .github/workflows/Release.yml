@@ -56,11 +56,11 @@ jobs:
           name: Release ${{ github.ref }}
           body: TODO New Release.
           draft: false
-          prerelease: false
+          # prerelease: false
           # files: |
           #   ${{ secrets.ReleaseZipName }}.zip
           #   LICENSE 
-          prerelease: false
+          # prerelease: false
       # 上传至release的资源
       - name: Upload release binaries
         uses: alexellis/upload-assets@0.2.2
